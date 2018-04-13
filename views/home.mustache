@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>{{title}}</title>
-  </head>
-  <body>
-    <ul>LAS VEGAS
-        {{#categories}}
-            <li>{{title}}</li>
-            <ul>
-                {{#subcats}}
-                    <li>{{title}}</li>
-                {{/subcats}}
-            </ul>
-        {{/categories}}
-    </ul>
-  </body>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{title}}</title>
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+    </head>
+    <body>
+        <div class="big-wrapper">
+            <div class="sidebar">
+                {{>searchBar}}
+            </div>
+            <div class="category-wrapper">
+                <h1>Las Vegas</h1>
+                <div class="list-container">
+                    {{#categories}}
+                        <div class="list-item">
+                            <li class="item-title">{{title}}</li>
+                            <ul>
+                                {{#subcats}}
+                                    <li class="item-subtitle">{{title}}</li>
+                                {{/subcats}}
+                            </ul>
+                        </div>
+                    {{/categories}}
+                </div>
+            </div>
+            <div class="sidebar-right">
+                {{>sortBar}}
+            </div>
+        </div>
+        <script type="text/javascript" href="/javascripts/scripts.js"></script> 
+    </body>
 </html>

@@ -1,8 +1,76 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.big-wrapper {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
 }
 
-a {
-  color: #00B7FF;
+/* left bar */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  margin-right: 20px;
+  color: rgb(47, 100, 181);
+  background-color: rgb(126, 221, 255);
+  
+}
+
+.sidebar a {
+  display: flex;
+  justify-content: space-around;
+}
+
+#searchBtn {
+  display: none;
+}
+
+/* middle content */
+.category-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* margin: 0 auto; */
+  width: 800px;
+}
+
+.list-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin: 5px;
+}
+
+.list-item ul {
+  padding: 0;
+}
+
+.item-title {
+  list-style: none;
+  padding: 10px;
+  background-color: rgb(174, 229, 249);
+}
+
+.item-subtitle {
+  list-style: none;
+}
+
+/* right bar */
+.sidebar-right {
+  display: flex;
+  justify-content: space-around;
+  width: 200px;
+  padding-top: 20px;
+  background-color: rgb(126, 221, 255);
+}
+
+.city-list-item {
+  text-decoration: none;
 }

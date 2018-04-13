@@ -2,9 +2,18 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>title</title>
+    <title>{{title}}</title>
   </head>
   <body>
-    Hello world
+    <ul>LAS VEGAS
+        {{#categories}}
+            <li>{{title}}</li>
+            <ul>
+                {{#subcats}}
+                    <li>{{title}}</li>
+                {{/subcats}}
+            </ul>
+        {{/categories}}
+    </ul>
   </body>
 </html>

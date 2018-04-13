@@ -12,17 +12,17 @@
             </div>
             <div class="category-wrapper">
                 <h1>Las Vegas</h1>
-                <div class="list-container">
-                    {{#categories}}
-                        <div class="list-item">
-                            <a href="categ/{{slug}}"><li class="item-title">{{title}}</li></a>
-                            <ul>
-                                {{#subcats}}
-                                    <a href="categ/{{slug}}"><li class="item-subtitle">{{title}}</li></a>
-                                {{/subcats}}
-                            </ul>
+                <div class="cat-container">
+                    {{#descriptions}}
+                        <div class="list-item-container">
+                            <h1 class="cat-title">{{.}}</h1>
+                            
+                                {{#contents}}
+                                    <p class="cat-content">{{.}}</p>
+                                {{/contents}}
+                            
                         </div>
-                    {{/categories}}
+                    {{/descriptions}}
                 </div>
             </div>
             <div class="sidebar-right">

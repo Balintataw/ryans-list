@@ -62,6 +62,25 @@
   list-style: none;
 }
 
+.desc, .content {
+  height: 20px;
+  width: 80%;
+}
+
+.cat-title {
+  font-size: 20px;
+  background: none;
+}
+
+.cat-content {
+
+}
+
+.cat-container {
+  display: flex;
+  width: 100%;
+}
+
 /* right bar */
 .sidebar-right {
   display: flex;
@@ -74,3 +93,41 @@
 .city-list-item {
   text-decoration: none;
 }
+
+/* add post */ 
+#add-post-form-container {
+  display: flex;
+}
+
+.radio-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-desc {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+
+.post-desc input {
+  width: 600px;
+  height: 40px;
+}
+
+textarea {
+  width: 600px;
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+#btn1 {
+  width: 70px;
+  padding: 5px;
+}
+

@@ -12,7 +12,7 @@
                 <div class="radio-col">
                 {{#categories}}
                     <label>
-                        <input type="radio" name="radioname" value ={{title}}/>{{title}}
+                        <input type="radio" name="radioname" value={{title}}{{parent_id}}/>{{title}}
                     </label>
                 {{/categories}}
                 </div>
@@ -21,7 +21,7 @@
                         <input type="text" name="desc" />
                     </label>
                     <textarea name="content" placeholder="Enter a description for your post"></textarea>
-                    <input type="file" name="picture" />
+                    {{! <input type="file" name="picture" /> }}
                     <button type="submit" id="btn1" value="Upload Image">Continue</button>
                 </div>
             </form>

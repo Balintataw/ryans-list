@@ -81,16 +81,28 @@ router.get('/createpost', (req, res, next) => {
 })
 
 //create new post
-router.post('/createpost' , upload.single('picture'), (req, res, next) => {
+router.post('/createpost' ,upload.single('picture'), (req, res, next) => {
   console.log(req.body)
-  console.log(req.file)
-  const post = {
-    description: req.body.description,
-    content: req.body.content,
-    category_id: 1,             //make this dynamic
-    image_path: req.file.path
-  }
+  // console.log(req.file)
+  var reg = /([a-z/-]+)(\d+)/
+  let name = req.body.radioname.slice(0, -1).match(reg)
+    const description = req.body.desc
+    const content = req.body.content
+    console.log(name)
+    const category_id = name[2]
+    // const image_id = 1
+    // const image_path = req.file.filename
+    // const listing_id = 1
   
+    const sql = `
+      INSERT INTO listings (description, category_id, content) 
+      VALUES (?, ?, ?)`
+    //   INSERT INTO images (image_path, listing_id)
+    //   VALUES
+    // `
+    conn.query(sql, [description, category_id, content], (err, results, fields) => {
+      res.redirect('/')
+    })
 })
 
 

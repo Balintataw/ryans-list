@@ -76,10 +76,7 @@
 
 }
 
-.cat-container {
-  display: flex;
-  width: 100%;
-}
+
 
 /* right bar */
 .sidebar-right {
@@ -129,5 +126,22 @@ textarea {
 #btn1 {
   width: 70px;
   padding: 5px;
+}
+
+/* category page styles */
+.list-item-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.cat-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.listing-image {
+  width: 150px;
+  height: 150px;
 }
 

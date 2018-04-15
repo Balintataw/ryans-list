@@ -43,7 +43,8 @@ router.get('/categ/:category', (req, res, next) => {
 	  categories.title,
 	  categories.slug,
 	  listings.description,
-	  listings.content
+    listings.content,
+    listings.image_filename
   FROM
 	  categories
   LEFT JOIN
@@ -51,14 +52,13 @@ router.get('/categ/:category', (req, res, next) => {
   WHERE categories.slug LIKE '${cat}'
   `
   var data = {
-    descriptions: [],
-    contents: []
+    listings: [ ]
   }
   conn.query(sql, (err, results, fields) => {
     results.map(result => {
-      data.descriptions.push(result.description)
-      data.contents.push(result.content)
+      data.listings.push({desc: result.description, cont: result.content, img: result.image_filename})
     })
+    data.title = results[0].slug
     res.render('category', data)
   })
 })
@@ -83,39 +83,26 @@ router.get('/createpost', (req, res, next) => {
 //create new post
 router.post('/createpost' ,upload.single('picture'), (req, res, next) => {
   console.log(req.body)
-  // console.log(req.file)
+  console.log(req.file)
   var reg = /([a-z/-]+)(\d+)/
   let name = req.body.radioname.slice(0, -1).match(reg)
     const description = req.body.desc
     const content = req.body.content
-    console.log(name)
     const category_id = name[2]
     // const image_id = 1
-    // const image_path = req.file.filename
-    // const listing_id = 1
+    const image_filename = req.file.filename
+    // const listing_id = name[2]
   
     const sql = `
-      INSERT INTO listings (description, category_id, content) 
-      VALUES (?, ?, ?)`
+      INSERT INTO listings (description, category_id, content, image_filename) 
+      VALUES (?, ?, ?, ?)`
     //   INSERT INTO images (image_path, listing_id)
     //   VALUES
     // `
-    conn.query(sql, [description, category_id, content], (err, results, fields) => {
+    conn.query(sql, [description, category_id, content, image_filename], (err, results, fields) => {
       res.redirect('/')
     })
 })
 
 
 module.exports = router;
-
-
-// app.post('/declining', (req, res, next) => {
-//   const person = {
-//       picture: req.body.picture,
-//       name: req.body.name,
-//       cell: req.body.phone,
-//       email: req.body.email
-//   }
-//   db.declined.push(person)
-//   res.redirect('/')
-// })

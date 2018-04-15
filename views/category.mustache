@@ -16,7 +16,8 @@
                 <div class="cat-container">
                     {{#listings}}
                         <div class="list-item-container">
-                            <h1 class="cat-title">{{desc}}</h1>
+                            <a href="/listing/{{desc}}/{{listing_id}}"><h1 class="cat-title">{{desc}}</h1></a>
+                            <p>${{price}}</p>
                             {{#img}}<img src="/uploads/{{img}}" alt="" class="listing-image"/>{{/img}}
                             <p class="cat-content">{{cont}}</p>
                         </div>

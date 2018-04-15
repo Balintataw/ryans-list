@@ -132,6 +132,7 @@ textarea {
 .list-item-container {
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid grey;
 }
 
 .cat-container {

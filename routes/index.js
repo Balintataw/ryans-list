@@ -36,35 +36,66 @@ router.get('/', function(req, res, next) {
   })
 });
 //get category listings
-router.get('/categ/:category', (req, res, next) => {
+router.get('/categ/:category/', (req, res, next) => {
+  // const reg = /\/\w+\/([\w-]+)\?(\w+)/
   let cat = req.params.category
+  let query = req.query
+  let viewState = query[Object.keys(query)[0]]
+  var dateReg = /\w+\s(\w+\s\d+)\s(\d+)\s([\d:]+)/
   let sql = `
-  SELECT 
-	  categories.title,
-	  categories.slug,
-	  listings.description,
-    listings.content,
-    listings.image_filename,
-    listings.id,
-    listings.list_price
-  FROM
-	  categories
-  LEFT JOIN
-	  listings ON categories.id = listings.category_id
-  WHERE categories.slug LIKE '${cat}'
+    SELECT 
+      categories.title,
+      categories.slug,
+      listings.description,
+      listings.content,
+      listings.image_filename,
+      listings.id,
+      listings.list_price,
+      listings.date_created
+    FROM
+      categories
+    LEFT JOIN
+      listings ON categories.id = listings.category_id
+    WHERE categories.slug LIKE '${cat}'
   `
   var data = {
-    listings: [ ]
+    listings: []
   }
   conn.query(sql, (err, results, fields) => {
-    results.map(result => {
-      data.listings.push({desc: result.description, cont: result.content, img: result.image_filename, listing_id: result.id, price: result.list_price})
+    results.map((result, i) => {
+      listing = {
+        desc: '',
+        cont: '',
+        listing_id: null,
+        price: null,
+        time: '',
+        img: ''
+      }
+      if(result.image_filename) {listing.img = result.image_filename}
+      if(result.date_created) {
+        let dateString = result.date_created.toString().match(dateReg)
+        listing.time = dateString[1]
+      }
+      listing.desc = result.description
+      listing.cont = result.content
+      listing.listing_id = result.id
+      listing.price = result.list_price
+      data.listings.push(listing)
     })
     data.title = results[0].slug
-    res.render('category', data)
+    console.log(data)
+    if(viewState === 'gallery') {
+      res.render('category', data)
+    } else if (viewState === 'list') {
+      res.render('categoryListView', data)
+    } else if (viewState === 'thumb') {
+      res.render('categoryThumbView', data)
+    } else {
+      res.render('category', data)
+    }
   })
 })
-//get listing data
+
 router.get('/listing/:listing/:id', (req, res, next) => {
   let listing = req.params.listing
   let current_id = req.params.id
@@ -85,7 +116,6 @@ router.get('/listing/:listing/:id', (req, res, next) => {
   WHERE listings.id LIKE '${current_id}'
   `
   conn.query(sql, (err, results, fields) => {
-    console.log(results)
     res.render('listing', results[0])
   })
 })
@@ -100,7 +130,7 @@ router.get('/createpost', (req, res, next) => {
     categories: []
   }
   conn.query(sql, (err, results, fields) => {
-    console.log(results)
+    // console.log(results)
     data.categories = results
     res.render('createpost', data)
   })
@@ -115,19 +145,19 @@ router.post('/createpost' ,upload.single('picture'), (req, res, next) => {
     const description = req.body.desc
     const content = req.body.content
     const category_id = name[2]
-    const image_filename = req.file.filename
+    const image_filename = req.file ? req.file.filename : '' 
     const price = req.body.price
   
     const sql = `
-      INSERT INTO listings (description, category_id, content, image_filename, price) 
-      VALUES (?, ?, ?, ?, ?)`
-    //   INSERT INTO images (image_path, listing_id)
-    //   VALUES
-    // `
+      INSERT INTO listings (description, category_id, content, image_filename, list_price, date_created) 
+      VALUES (?, ?, ?, ?, ?, NOW())`
     conn.query(sql, [description, category_id, content, image_filename, price], (err, results, fields) => {
-      res.redirect(`/listing/${description}`)
+      res.redirect(`/categ/${name[1]}`)
     })
 })
 
 
 module.exports = router;
+
+
+// category headers need to render all their subcategories

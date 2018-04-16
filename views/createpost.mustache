@@ -7,30 +7,32 @@
     </head>
     <body>
         <div class="add-post-container">
-            <h1>Choose a category</h1>
-            <form action="/createpost" method="POST" enctype="multipart/form-data" id="add-post-form-container">
-                <div class="radio-col">
-                {{#categories}}
-                    <label>
-                        <input type="radio" name="radioname" value={{title}}{{parent_id}}/>{{title}}
-                    </label>
-                {{/categories}}
-                </div>
-                <div class="input-col">
-                    <label class="post-desc">Enter a title for your post
-                        <input type="text" name="desc" />
-                    </label>
-                    <label class="post-price">Enter a price
-                        <input type="text" name="price" />
-                    </label>
-                    <textarea name="content" placeholder="Enter a description for your post"></textarea>
-                    <input type="file" name="picture" />
-                    <button type="submit" id="btn1" value="Upload Image">Continue</button>
-                </div>
-            </form>
-            {{! <form action="/createpost" method="POST" enctype="multipart/form-data">
-                <button type="submit">upload pic</button>
-            </form> }}
+            <div class="sidebar">
+                {{>searchBar}}
+            </div>
+            <div>
+                <h1>Choose a category</h1>
+                <form action="/createpost" method="POST" enctype="multipart/form-data" id="add-post-form-container">
+                    <div class="radio-col">
+                    {{#categories}}
+                        <label>
+                            <input type="radio" name="radioname" value={{title}}{{id}}/>{{title}}
+                        </label>
+                    {{/categories}}
+                    </div>
+                    <div class="input-col">
+                        <label class="post-desc">Enter a title for your post
+                            <input type="text" name="desc" />
+                        </label>
+                        <label class="post-price">Enter a price
+                            <input type="text" name="price" />
+                        </label>
+                        <textarea name="content" placeholder="Enter a description for your post"></textarea>
+                        <input type="file" name="picture" />
+                        <button type="submit" id="btn1" value="Upload Image">Continue</button>
+                    </div>
+                </form>
+            </div>
         </div>
         <script type="text/javascript" href="/javascripts/scripts.js"></script> 
     </body>

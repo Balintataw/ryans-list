@@ -1,0 +1,170 @@
+.big-wrapper {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+  
+  /* left bar */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    margin-right: 20px;
+    color: rgb(47, 100, 181);
+    background-color: rgb(126, 221, 255);
+    
+  }
+  
+  .sidebar a {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  #searchBtn {
+    display: none;
+  }
+  
+  /* middle content */
+  .category-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin: 0 auto; */
+    width: 800px;
+  }
+  
+  .list-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  
+  .list-item {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    margin: 5px;
+  }
+  
+  .list-item ul {
+    padding: 0;
+  }
+  
+  .item-title {
+    list-style: none;
+    padding: 10px;
+    background-color: rgb(174, 229, 249);
+  }
+  
+  .item-subtitle {
+    list-style: none;
+  }
+  
+  .desc, .content {
+    height: 20px;
+    width: 80%;
+  }
+  
+  .cat-title {
+    font-size: 20px;
+    background: none;
+  }
+  
+ 
+  
+  
+  /* right bar */
+  .sidebar-right {
+    display: flex;
+    justify-content: space-around;
+    width: 200px;
+    padding-top: 20px;
+    background-color: rgb(126, 221, 255);
+  }
+  
+  .city-list-item {
+    text-decoration: none;
+  }
+  
+  /* add post */ 
+  #add-post-form-container {
+    display: flex;
+  }
+  
+  .add-post-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .radio-col {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-col {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .post-desc {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+  }
+  
+  .post-desc input {
+    width: 600px;
+    height: 40px;
+  }
+  
+  textarea {
+    width: 600px;
+    height: 300px;
+    margin-bottom: 20px;
+  }
+  
+  #btn1 {
+    width: 70px;
+    padding: 5px;
+  }
+  
+  /* category page styles */
+  .list-item-container-listView {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid grey;
+  }
+  .list-item-container-listView p {
+      margin: 0;
+  }  
+  
+  .cat-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .content-container-listView {
+      display: flex;
+      flex-direction: row;
+  }
+
+  .cat-content-listView {
+      width: 400px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+  }
+   
+  .listing-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  button[name="list"] {
+      background-color: grey;
+  }
+  
+  

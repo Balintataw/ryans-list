@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{{title}}</title>
-        <link rel="stylesheet" href="/stylesheets/style.css" />
+        <link rel="stylesheet" href="/stylesheets/listView.css" />
     </head>
     <body>
         <div class="big-wrapper">
@@ -11,22 +11,22 @@
                 {{>searchBar}}
             </div>
             <div class="category-wrapper">
-                <h1>Las Vegas</h1>
-                <h3>{{title}}</h3>
-                <form action="/categ/{{title}}/" >
+                <h1>Las Vegas listview</h1>
+                <h3>{{title}}<h3>
+                <form action="/categ/{{title}}" >
                     <button type=submit name="gallery" value="gallery">Gallery</button>
                     <button type=submit name="list" value="list">List</button>
                     <button type=submit name="thumb" value="thumb">Thumbnail</button>
                 </form>
                 <div class="cat-container">
                     {{#listings}}
-                        <div class="list-item-container">
+                        <div class="list-item-container-listView">
                             <a href="/listing/{{desc}}/{{listing_id}}"><h1 class="cat-title">{{desc}}</h1></a>
-                            {{#time}}<p>{{time}}</p>{{/time}}
-                            {{#price}}<p>${{price}}</p>{{/price}}
-                            
-                            {{#img}}<img src="/uploads/{{img}}" alt="" class="listing-image"/>{{/img}}
-                            <p class="cat-content">{{cont}}</p>
+                            <div class="content-container-listView">
+                                {{#price}}<p>${{price}}</p>{{/price}}
+                                {{#time}}<p>{{time}}</p>{{/time}}
+                                <p class="cat-content-listView">{{cont}}</p>
+                            </div>
                         </div>
                     {{/listings}}
                 </div>

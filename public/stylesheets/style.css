@@ -29,7 +29,7 @@
 .category-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   /* margin: 0 auto; */
   width: 800px;
 }
@@ -94,6 +94,11 @@
 /* add post */ 
 #add-post-form-container {
   display: flex;
+}
+
+.add-post-container {
+  display: flex;
+  flex-direction: row;
 }
 
 .radio-col {

@@ -36,9 +36,9 @@ router.get('/', function(req, res, next) {
   })
 });
 //get category listings
-router.get('/categ/:category/', (req, res, next) => {
+router.get('/categ/:categoryID/:title?', (req, res, next) => {
   // const reg = /\/\w+\/([\w-]+)\?(\w+)/
-  let cat = req.params.category
+  let catID = req.params.categoryID
   let query = req.query
   let viewState = query[Object.keys(query)[0]]
   var dateReg = /\w+\s(\w+\s\d+)\s(\d+)\s([\d:]+)/
@@ -53,10 +53,10 @@ router.get('/categ/:category/', (req, res, next) => {
       listings.list_price,
       listings.date_created
     FROM
-      categories
+      listings
     LEFT JOIN
-      listings ON categories.id = listings.category_id
-    WHERE categories.slug LIKE '${cat}'
+      categories ON listings.category_id = categories.id
+    WHERE listings.category_id = ${catID} OR categories.parent_id = ${catID}
   `
   var data = {
     listings: []
@@ -69,7 +69,7 @@ router.get('/categ/:category/', (req, res, next) => {
         listing_id: null,
         price: null,
         time: '',
-        img: ''
+        img: '',
       }
       if(result.image_filename) {listing.img = result.image_filename}
       if(result.date_created) {
@@ -82,8 +82,7 @@ router.get('/categ/:category/', (req, res, next) => {
       listing.price = result.list_price
       data.listings.push(listing)
     })
-    data.title = results[0].slug
-    console.log(data)
+    data.title = req.params.title
     if(viewState === 'gallery') {
       res.render('category', data)
     } else if (viewState === 'list') {

@@ -13,7 +13,6 @@
   margin-right: 20px;
   color: rgb(47, 100, 181);
   background-color: rgb(126, 221, 255);
-  
 }
 
 .sidebar a {
@@ -25,20 +24,29 @@
   display: none;
 }
 
-/* middle content */
+/* right bar */
+.sidebar-right {
+  display: flex;
+  justify-content: space-around;
+  width: 200px;
+  padding-top: 20px;
+  background-color: rgb(126, 221, 255);
+}
+
+.city-list-item {
+  text-decoration: none;
+}
+
+/* home page style */
 .category-wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* margin: 0 auto; */
   width: 800px;
 }
 
 .list-container {
   display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-  flex-wrap: wrap;
 }
 
 .list-item {
@@ -70,25 +78,6 @@
 .cat-title {
   font-size: 20px;
   background: none;
-}
-
-.cat-content {
-
-}
-
-
-
-/* right bar */
-.sidebar-right {
-  display: flex;
-  justify-content: space-around;
-  width: 200px;
-  padding-top: 20px;
-  background-color: rgb(126, 221, 255);
-}
-
-.city-list-item {
-  text-decoration: none;
 }
 
 /* add post */ 
@@ -134,20 +123,61 @@ textarea {
 }
 
 /* category page styles */
-.list-item-container {
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid grey;
-}
-
-.cat-container {
+/* list */
+.list {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-
-.listing-image {
-  width: 150px;
-  height: 150px;
+.list img {
+  display: none;
+}
+.listbtn:active {
+  background: grey;
+}
+/* gallery */
+.gallery {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.gallery img {
+  width: 90%;
+  height: 45%;
+}
+.gallery .list-item-container {
+  width: 30%;
+  margin-top: 10px;
+}
+.gallerybtn:focus {
+  background: grey;
+}
+/* thumbnail */
+.thumb {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.thumb img {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+.thumb .list-item-container {
+  display: flex;
+  margin-top: 10px;
+}
+.thumb .cat-date {
+  font-size: 14px;
+}
+.thumb .cat-content {
+  display: none;
+}
+.thumb p {
+  margin-left: 10px;
+}
+.thumbbtn:focus {
+  background: grey;
 }
 

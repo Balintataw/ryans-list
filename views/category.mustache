@@ -13,19 +13,26 @@
             <div class="category-wrapper">
                 <h1>Las Vegas</h1>
                 <h3>{{title}}</h3>
-                <form action="/categ/{{title}}/" >
-                    <button type=submit name="gallery" value="gallery">Gallery</button>
-                    <button type=submit name="list" value="list">List</button>
-                    <button type=submit name="thumb" value="thumb">Thumbnail</button>
+                <form action="{{title}}" >
+                    <button type=submit name="gallery" value="gallery" class="{{view}}btn">Gallery</button>
+                    <button type=submit name="list" value="list" class="{{view}}btn">List</button>
+                    <button type=submit name="thumb" value="thumb" class="{{view}}btn">Thumbnail</button>
                 </form>
-                <div class="cat-container">
+                <form action="{{title}}">
+                    <button type=submit name="recent" value="recent" class="">Recent</button>
+                    <button type=submit name="highest" value="highest" class="">Highest Price</button>
+                    <button type=submit name="lowest" value="lowest" class="">Lowest Price</button>
+                </form>
+                <a href="recent">Recent</a>
+                <a href="highest">Highest</a>
+                <a href="lowest">Lowest</a>
+                <div class="{{view}}">
                     {{#listings}}
                         <div class="list-item-container">
-                            <a href="/listing/{{desc}}/{{listing_id}}"><h1 class="cat-title">{{desc}}</h1></a>
-                            {{#time}}<p>{{time}}</p>{{/time}}
-                            {{#price}}<p>${{price}}</p>{{/price}}
-                            
                             {{#img}}<img src="/uploads/{{img}}" alt="" class="listing-image"/>{{/img}}
+                            <a href="/listing/{{desc}}/{{listing_id}}"><h1 class="cat-title">{{desc}}</h1></a> 
+                            {{#time}}<p class="cat-date">{{time}}</p>{{/time}}
+                            {{#price}}<p class="cat-cost">${{price}}</p>{{/price}}
                             <p class="cat-content">{{cont}}</p>
                         </div>
                     {{/listings}}

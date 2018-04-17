@@ -140,7 +140,7 @@
       margin: 0;
   }  
   
-  .cat-container {
+  .list {
     display: flex;
     flex-direction: column;
     width: 100%;

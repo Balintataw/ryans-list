@@ -18,7 +18,7 @@
                     <button type=submit name="list" value="list">List</button>
                     <button type=submit name="thumb" value="thumb">Thumbnail</button>
                 </form>
-                <div class="cat-container">
+                <div class="{{view}}">
                     {{#listings}}
                         <div class="list-item-container">
                             {{#img}}<img src="/uploads/{{img}}" alt="" class="listing-image"/>{{/img}}

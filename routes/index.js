@@ -36,69 +36,89 @@ router.get('/', function(req, res, next) {
   })
 });
 //get category listings
-router.get('/categ/:categoryID/:title?', (req, res, next) => {
-  // const reg = /\/\w+\/([\w-]+)\?(\w+)/
-  let catID = req.params.categoryID
-  let query = req.query
-  let viewState = query[Object.keys(query)[0]]
+router.get('/:slug/:view?', (req, res, next) => {
+  console.log(req.params)
+  let viewState = req.query[Object.keys(req.query)[0]]
   var dateReg = /\w+\s(\w+\s\d+)\s(\d+)\s([\d:]+)/
-  let sql = `
-    SELECT 
-      categories.title,
-      categories.slug,
-      listings.description,
-      listings.content,
-      listings.image_filename,
-      listings.id,
-      listings.list_price,
-      listings.date_created
-    FROM
-      listings
-    LEFT JOIN
-      categories ON listings.category_id = categories.id
-    WHERE listings.category_id = ${catID} OR categories.parent_id = ${catID}
-  `
-  var data = {
-    listings: []
-  }
-  conn.query(sql, (err, results, fields) => {
-    results.map((result, i) => {
-      listing = {
-        desc: '',
-        cont: '',
-        listing_id: null,
-        price: null,
-        time: '',
-        img: '',
+  const query = `SELECT id, title FROM categories WHERE slug = ?`
+  conn.query(query, [req.params.slug], (err, results, fields) => {
+    if(results.length > 0) {
+      const id = results[0].id
+      let sql = `
+        SELECT 
+          categories.title,
+          categories.slug,
+          listings.description,
+          listings.content,
+          listings.image_filename,
+          listings.id,
+          listings.list_price,
+          listings.date_created
+        FROM
+          listings
+        LEFT JOIN
+          categories ON listings.category_id = categories.id
+        WHERE listings.category_id = ${id} OR categories.parent_id = ${id}
+      `
+      // if (viewState === 'highest') {
+      //   sql+='GROUP BY listings.list_price DESC'
+      // } else if (viewState === 'lowest') {
+      //   sql+='GROUP BY listings.list_price ASC'
+      // } else if (viewState === 'recent') {
+      //   sql+='GROUP BY listings.date_created DESC'
+      // }
+      var data = {
+        listings: []
       }
-      if(result.image_filename) {listing.img = result.image_filename}
-      if(result.date_created) {
-        let dateString = result.date_created.toString().match(dateReg)
-        listing.time = dateString[1]
-      }
-      listing.desc = result.description
-      listing.cont = result.content
-      listing.listing_id = result.id
-      listing.price = result.list_price
-      data.listings.push(listing)
-    })
-    data.title = req.params.title
-    if(viewState === 'gallery') {
-      res.render('category', data)
-    } else if (viewState === 'list') {
-      res.render('categoryListView', data)
-    } else if (viewState === 'thumb') {
-      res.render('categoryThumbView', data)
+      conn.query(sql, [id, id], (err2, results2, fields2) => {
+        // console.log(results2)
+        results2.map((result, i) => {
+          result.date_created.toString().match(dateReg)
+          listing = {
+            desc: '',
+            cont: '',
+            listing_id: null,
+            price: null,
+            time: '',
+            img: ''
+          }
+          if(result.image_filename) {listing.img = result.image_filename}
+          if(result.date_created) {
+            let dateString = result.date_created.toString().match(dateReg)
+            listing.time = dateString[1]
+          }
+          console.log(viewState)
+          listing.desc = result.description
+          listing.cont = result.content
+          listing.listing_id = result.id
+          listing.price = result.list_price
+          // listing.view = viewState || 'list'
+          data.listings.push(listing)
+        })
+        data.view = viewState || 'gallery'
+        console.log(data)
+        res.render('category', data)
+      })
     } else {
-      res.render('category', data)
+      next()    
     }
   })
+    // data.title = req.params.title
+    // if(viewState === 'gallery') {
+    //   res.render('category', data)
+    // } else if (viewState === 'list') {
+    //   res.render('categoryListView', data)
+    // } else if (viewState === 'thumb') {
+    //   res.render('categoryThumbView', data)
+    // } else {
+    //   res.render('category', data)
+    // }
+  // })
 })
 
 router.get('/listing/:listing/:id', (req, res, next) => {
   let listing = req.params.listing
   let current_id = req.params.id
-  console.log(req.params)
   let sql = `
   SELECT 
 	  categories.title,
@@ -129,7 +149,6 @@ router.get('/createpost', (req, res, next) => {
     categories: []
   }
   conn.query(sql, (err, results, fields) => {
-    // console.log(results)
     data.categories = results
     res.render('createpost', data)
   })
@@ -137,8 +156,6 @@ router.get('/createpost', (req, res, next) => {
 
 //create new post
 router.post('/createpost' ,upload.single('picture'), (req, res, next) => {
-  console.log(req.body)
-  console.log(req.file)
   var reg = /([a-z/-]+)(\d+)/
   let name = req.body.radioname.slice(0, -1).match(reg)
     const description = req.body.desc
@@ -151,12 +168,10 @@ router.post('/createpost' ,upload.single('picture'), (req, res, next) => {
       INSERT INTO listings (description, category_id, content, image_filename, list_price, date_created) 
       VALUES (?, ?, ?, ?, ?, NOW())`
     conn.query(sql, [description, category_id, content, image_filename, price], (err, results, fields) => {
-      res.redirect(`/categ/${name[1]}`)
+      res.redirect(`/${name[1]}`)  //this needs fixing
     })
 })
 
 
 module.exports = router;
 
-
-// category headers need to render all their subcategories

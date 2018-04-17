@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{{description}}</title>
-        <link rel="stylesheet" href="/stylesheets/style.css" />
+        <link rel="stylesheet" href="/stylesheets/listing.css" />
     </head>
     <body>
         <div class="big-wrapper">
@@ -12,8 +12,11 @@
             </div>
             <div class="listing-wrapper">
                 <h1>{{description}}</h1>
+                <span class="price">Asking Price: ${{list_price}}</span>
+                <span></span>
                 {{#image_filename}}<img src="/uploads/{{image_filename}}"/>{{/image_filename}}
-                <p>{{content}}</p>
+                <p>Description:<br>
+                {{content}}</p>
             </div>
             <div class="sidebar-right">
                 {{>sortBar}}

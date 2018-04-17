@@ -16,10 +16,10 @@
                     {{#categories}}
                         <div class="list-item">
                                 {{! change slug to id }}
-                            <a href="categ/{{id}}/{{title}}"><li class="item-title">{{title}}</li></a>
+                            <a href="{{slug}}"><li class="item-title">{{title}}</li></a>
                             <ul>
                                 {{#subcats}}
-                                    <a href="categ/{{id}}/{{title}}"><li class="item-subtitle">{{title}}</li></a>
+                                    <a href="{{slug}}"><li class="item-subtitle">{{title}}</li></a>
                                 {{/subcats}}
                             </ul>
                         </div>

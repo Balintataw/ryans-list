@@ -36,14 +36,14 @@ router.get('/', function(req, res, next) {
   })
 });
 //get category listings
-router.get('/:slug/:view?', (req, res, next) => {
-  console.log(req.params)
-  let viewState = req.query[Object.keys(req.query)[0]]
+router.get('/:slug/:view?/:sort?', (req, res, next) => {
+  let viewState = req.params.view
+  let sortState = req.params.sort
   var dateReg = /\w+\s(\w+\s\d+)\s(\d+)\s([\d:]+)/
   const query = `SELECT id, title FROM categories WHERE slug = ?`
   conn.query(query, [req.params.slug], (err, results, fields) => {
+    const id = results[0].id
     if(results.length > 0) {
-      const id = results[0].id
       let sql = `
         SELECT 
           categories.title,
@@ -60,18 +60,19 @@ router.get('/:slug/:view?', (req, res, next) => {
           categories ON listings.category_id = categories.id
         WHERE listings.category_id = ${id} OR categories.parent_id = ${id}
       `
-      // if (viewState === 'highest') {
-      //   sql+='GROUP BY listings.list_price DESC'
-      // } else if (viewState === 'lowest') {
-      //   sql+='GROUP BY listings.list_price ASC'
-      // } else if (viewState === 'recent') {
-      //   sql+='GROUP BY listings.date_created DESC'
-      // }
+      if (sortState === 'highest') {
+        sql+='ORDER BY listings.list_price DESC'
+      } else if (sortState === 'lowest') {
+        sql+='ORDER BY listings.list_price ASC'
+      } else if (sortState === 'recent') {
+        sql+='ORDER BY listings.date_created DESC'
+      }
+      console.log(sql)
       var data = {
         listings: []
       }
       conn.query(sql, [id, id], (err2, results2, fields2) => {
-        // console.log(results2)
+        console.log(results2)
         results2.map((result, i) => {
           result.date_created.toString().match(dateReg)
           listing = {
@@ -87,15 +88,17 @@ router.get('/:slug/:view?', (req, res, next) => {
             let dateString = result.date_created.toString().match(dateReg)
             listing.time = dateString[1]
           }
-          console.log(viewState)
+          // console.log(viewState)
           listing.desc = result.description
           listing.cont = result.content
           listing.listing_id = result.id
           listing.price = result.list_price
-          // listing.view = viewState || 'list'
+          // console.log(listing)
           data.listings.push(listing)
         })
         data.view = viewState || 'gallery'
+        data.slug = req.params.slug
+        data.sort = req.params.sort || 'recent'
         console.log(data)
         res.render('category', data)
       })
@@ -113,7 +116,7 @@ router.get('/:slug/:view?', (req, res, next) => {
     // } else {
     //   res.render('category', data)
     // }
-  // })
+  
 })
 
 router.get('/listing/:listing/:id', (req, res, next) => {

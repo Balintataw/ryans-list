@@ -13,19 +13,24 @@
             <div class="category-wrapper">
                 <h1>Las Vegas</h1>
                 <h3>{{title}}</h3>
-                <form action="{{title}}" >
-                    <button type=submit name="gallery" value="gallery" class="{{view}}btn">Gallery</button>
-                    <button type=submit name="list" value="list" class="{{view}}btn">List</button>
-                    <button type=submit name="thumb" value="thumb" class="{{view}}btn">Thumbnail</button>
-                </form>
-                <form action="{{title}}">
-                    <button type=submit name="recent" value="recent" class="">Recent</button>
-                    <button type=submit name="highest" value="highest" class="">Highest Price</button>
-                    <button type=submit name="lowest" value="lowest" class="">Lowest Price</button>
-                </form>
-                <a href="recent">Recent</a>
-                <a href="highest">Highest</a>
-                <a href="lowest">Lowest</a>
+                <div class=dropdown-container>
+                    <div class="dropdown">
+                        <span>View By:</span>
+                        <div class="dropdown-content">
+                            <a href="/{{slug}}/gallery/{{sort}}">Gallery</a><br>
+                            <a href="/{{slug}}/list/{{sort}}">List</a><br>
+                            <a href="/{{slug}}/thumb/{{sort}}">Thumbs</a><br>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <span>Sort By:</span>
+                        <div class="dropdown-content">
+                            <a href="/{{slug}}/{{view}}/recent">Recent</a><br>
+                            <a href="/{{slug}}/{{view}}/lowest">Price Lowest</a><br>
+                            <a href="/{{slug}}/{{view}}/highest">Price Highest</a><br>
+                        </div>
+                    </div>
+                </div>
                 <div class="{{view}}">
                     {{#listings}}
                         <div class="list-item-container">

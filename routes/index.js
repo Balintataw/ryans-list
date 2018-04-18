@@ -15,7 +15,7 @@ router.get('/account', (req, res, next) => {
 })
 
 /* GET home page. */
-router.get('/', auth, function(req, res, next) {
+router.get('/', auth, (req, res, next) => {
   const sql = `
     SELECT	
     title,
@@ -27,6 +27,7 @@ router.get('/', auth, function(req, res, next) {
   `
   let data = {
     title: 'Home',
+    user: req.session.user
   }
   conn.query(sql, (err, results, fields) => {
     data.categories = results.filter(result => result.parent_id === null)
@@ -42,7 +43,7 @@ router.get('/', auth, function(req, res, next) {
   })
 });
 //get category listings
-router.get('/:slug/:view?/:sort?', (req, res, next) => {
+router.get('/:slug/:view?/:sort?', auth, (req, res, next) => {
   let viewState = req.params.view
   let sortState = req.params.sort
   var dateReg = /\w+\s(\w+\s\d+)\s(\d+)\s([\d:]+)/
@@ -144,7 +145,7 @@ router.get('/listing/:slug/:id?', (req, res, next) => {
   })
 })
 //populate createpost
-router.get('/createpost', (req, res, next) => {
+router.get('/createpost', auth, (req, res, next) => {
   let sql = `
     SELECT *
     FROM categories
@@ -159,7 +160,7 @@ router.get('/createpost', (req, res, next) => {
   })
 })
 //create new post
-router.post('/createpost' ,upload.single('picture'), (req, res, next) => {
+router.post('/createpost', auth, upload.single('picture'), (req, res, next) => {
   var reg = /([a-z/-]+)(\d+)/
   let name = req.body.radioname.slice(0, -1).match(reg)
     const description = req.body.desc

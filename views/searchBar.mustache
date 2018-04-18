@@ -1,9 +1,10 @@
 <div>
-    <a href="/"><h1>RyansList</h1></a>
+    <a href="/" class="logo"><h1>RyansList</h1></a>
+    {{#user}}<h3>Welcome, {{user}}!</h3>{{/user}}
     <a href="/createpost">post to classifieds</a> 
     <a href="/account">my account</a>
     <form action="" method="GET">
-        <input type="text" placeholder="Search RyansList"/>
+        <input type="text" placeholder="Search RyansList" class="site-searchbar"/>
         <button type="submit hidden" id="searchBtn"></button>
     </form> 
 </div>

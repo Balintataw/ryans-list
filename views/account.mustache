@@ -2,12 +2,28 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{{title}}</title>
+        <title>My Account</title>
         <link rel="stylesheet" href="/stylesheets/style.css" />
     </head>
     <body>
-        <div>
-            my account page
+        <div class="big-wrapper">
+            <div class="sidebar">
+                {{>searchBar}}
+            </div>
+            <div class="category-wrapper">
+                <h1>Your account page, {{user}}</h1>
+                <hr />
+                {{#results}}
+                    <h1>{{description}}</h1>
+                    <img src="/uploads/{{image_filename}}" class="account-img"/>
+                    <p>${{list_price}}</p>
+                    <p>{{date_created}}</p>
+                    <p>{{content}}</p>
+                {{/results}}
+            </div>
+            <div class="sidebar-right">
+                {{>sortBar}}
+            </div>
         </div>
     </body>
 </html>

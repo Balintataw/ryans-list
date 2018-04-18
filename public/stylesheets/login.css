@@ -2,10 +2,10 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
-  }
-  
-  /* left bar */
-  .sidebar {
+}
+
+/* left bar */
+.sidebar {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,28 +13,38 @@
     margin-right: 20px;
     color: rgb(47, 100, 181);
     background-color: rgb(126, 221, 255);
-  }
-  
-  .sidebar a {
+}
+
+.sidebar a {
     display: flex;
     justify-content: space-around;
-  }
-  
-  #searchBtn {
+}
+
+#searchBtn {
     display: none;
+}
+
+.site-searchbar {
+    margin-top: 20px;
+    width: 98%;
+    height: 25px;
+}
+.logo {
+    text-decoration: none;
+    color: rgb(74, 100, 165);
   }
   
 /* right bar */
 .sidebar-right {
-display: flex;
-justify-content: space-around;
-width: 200px;
-padding-top: 20px;
-background-color: rgb(126, 221, 255);
+    display: flex;
+    justify-content: space-around;
+    width: 200px;
+    padding-top: 20px;
+    background-color: rgb(126, 221, 255);
 }
 
 .city-list-item {
-text-decoration: none;
+    text-decoration: none;
 }
 
 /* login form */ 
@@ -54,7 +64,7 @@ legend {
     text-align: right;
 }
 
-input {
+.input {
     margin: 10px 0;
     height: 30px;
     width: 99%;

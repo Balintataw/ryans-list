@@ -13,21 +13,21 @@
             <div class="login-wrapper">
                 <h1>{{title}}</h1>
                 {{#error}}<p class="error-message">{{error}}</p>{{/error}}
-                {{^error}}<p>"Dont have an account? Register below"</p>{{/error}}
+                {{^error}}<p>Dont have an account? Register below!</p>{{/error}}
                 <form action="/login" method="POST" class="login-form">
                     <fieldset>
                     <legend>Login</legend>
-                    <input type="text" name="username" placeholder="Username"/><br />
-                    <input type="password" name="password" placeholder="Password"/><br />
+                    <input type="text" name="username" placeholder="Username" class="input"/><br />
+                    <input type="password" name="password" placeholder="Password" class="input"/><br />
                     <button type="submit">Login</button>
                     </fieldset>
                 </form>
                 <form action="/register" method="POST" class="register-form">
                     <fieldset>
                     <legend>Register</legend>
-                    <input type="text" name="username" placeholder="Username"/><br />
-                    <input type="password" name="password" placeholder="Password"/><br />
-                    <input type="password" name="confirmpassword" placeholder="Confirm password"/><br />
+                    <input type="text" name="username" placeholder="Username" class="input"/><br />
+                    <input type="password" name="password" placeholder="Password" class="input"/><br />
+                    <input type="password" name="confirmpassword" placeholder="Confirm password" class="input"/><br />
                     <button type="submit">Register</button> 
                     </fieldset>
                 </form>

@@ -149,6 +149,10 @@ textarea {
 
 /* category page styles */
 /* list */
+.list-item-container {
+  display: flex;
+  align-items: center;
+}
 .list {
   display: flex;
   flex-direction: column;
@@ -200,7 +204,7 @@ textarea {
   display: none;
 }
 .thumb p {
-  margin-left: 10px;
+  margin: 0 10px;
 }
 .thumbbtn:focus {
   background: grey;

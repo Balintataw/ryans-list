@@ -1,0 +1,72 @@
+.big-wrapper {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+  
+  /* left bar */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    margin-right: 20px;
+    color: rgb(47, 100, 181);
+    background-color: rgb(126, 221, 255);
+  }
+  
+  .sidebar a {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  #searchBtn {
+    display: none;
+  }
+  
+/* right bar */
+.sidebar-right {
+display: flex;
+justify-content: space-around;
+width: 200px;
+padding-top: 20px;
+background-color: rgb(126, 221, 255);
+}
+
+.city-list-item {
+text-decoration: none;
+}
+
+/* login form */ 
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 800px;
+}
+
+.login-form, .register-form {
+    margin-top: 20px;
+    width: 50%;
+}
+
+legend {
+    text-align: right;
+}
+
+input {
+    margin: 10px 0;
+    height: 30px;
+    width: 99%;
+}
+
+button {
+    float: right;
+    width: 60px;
+    height: 25px;
+    border-radius: 10px;
+}
+
+.error-message {
+    color: rgb(228, 92, 92);
+}

@@ -2,14 +2,20 @@ var express = require('express');
 var router = express.Router();
 var path = require('path')
 const conn = require('../lib/conn')
-var multer = require('multer')
-var upload = multer({
+const multer = require('multer')
+const upload = multer({
   dest: path.join(__dirname, '../public/uploads'),
   limits: {filesize: 1000000, files:1}
 })
+const auth = require('../middlewares/auth')
+const shortid = require('shortid')
+//account page
+router.get('/account', (req, res, next) => {
+  res.render('account', {title: 'My Account'})
+})
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', auth, function(req, res, next) {
   const sql = `
     SELECT	
     title,
@@ -42,8 +48,9 @@ router.get('/:slug/:view?/:sort?', (req, res, next) => {
   var dateReg = /\w+\s(\w+\s\d+)\s(\d+)\s([\d:]+)/
   const query = `SELECT id, title FROM categories WHERE slug = ?`
   conn.query(query, [req.params.slug], (err, results, fields) => {
-    const id = results[0].id
     if(results.length > 0) {
+      const id = results[0].id
+      const title = results[0].title
       let sql = `
         SELECT 
           categories.title,
@@ -53,7 +60,9 @@ router.get('/:slug/:view?/:sort?', (req, res, next) => {
           listings.image_filename,
           listings.id,
           listings.list_price,
-          listings.date_created
+          listings.date_created,
+          listings.slug,
+          listings.created_by
         FROM
           listings
         LEFT JOIN
@@ -81,7 +90,9 @@ router.get('/:slug/:view?/:sort?', (req, res, next) => {
             listing_id: null,
             price: null,
             time: '',
-            img: ''
+            img: '',
+            list_slug: result.slug,
+            created_by: result.created_by
           }
           if(result.image_filename) {listing.img = result.image_filename}
           if(result.date_created) {
@@ -99,6 +110,8 @@ router.get('/:slug/:view?/:sort?', (req, res, next) => {
         data.view = viewState || 'gallery'
         data.slug = req.params.slug
         data.sort = req.params.sort || 'recent'
+        data.title = title
+        data.user = req.session.user
         console.log(data)
         res.render('category', data)
       })
@@ -106,21 +119,10 @@ router.get('/:slug/:view?/:sort?', (req, res, next) => {
       next()    
     }
   })
-    // data.title = req.params.title
-    // if(viewState === 'gallery') {
-    //   res.render('category', data)
-    // } else if (viewState === 'list') {
-    //   res.render('categoryListView', data)
-    // } else if (viewState === 'thumb') {
-    //   res.render('categoryThumbView', data)
-    // } else {
-    //   res.render('category', data)
-    // }
-  
 })
-
-router.get('/listing/:listing/:id', (req, res, next) => {
-  let listing = req.params.listing
+//populate individual listing page
+router.get('/listing/:slug/:id?', (req, res, next) => {
+  let slug = req.params.slug
   let current_id = req.params.id
   let sql = `
   SELECT 
@@ -156,7 +158,6 @@ router.get('/createpost', (req, res, next) => {
     res.render('createpost', data)
   })
 })
-
 //create new post
 router.post('/createpost' ,upload.single('picture'), (req, res, next) => {
   var reg = /([a-z/-]+)(\d+)/
@@ -166,12 +167,14 @@ router.post('/createpost' ,upload.single('picture'), (req, res, next) => {
     const category_id = name[2]
     const image_filename = req.file ? req.file.filename : '' 
     const price = req.body.price
+    const posted_by = req.session.user
+    const slug = shortid.generate()
   
     const sql = `
-      INSERT INTO listings (description, category_id, content, image_filename, list_price, date_created) 
-      VALUES (?, ?, ?, ?, ?, NOW())`
-    conn.query(sql, [description, category_id, content, image_filename, price], (err, results, fields) => {
-      res.redirect(`/${name[1]}`)  //this needs fixing
+      INSERT INTO listings (description, category_id, content, image_filename, list_price, date_created, created_by, slug) 
+      VALUES (?, ?, ?, ?, ?, NOW(), ?, ?)`
+    conn.query(sql, [description, category_id, content, image_filename, price, posted_by, slug], (err, results, fields) => {
+      res.redirect(`/listing/${slug}/${category_id}`)  //this needs fixing
     })
 })
 

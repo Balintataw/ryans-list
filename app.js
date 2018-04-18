@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mustacheExpress = require('mustache-express');
+var config = require('./config/default.json')
+var session = require('express-session')
+var authRoutes = require('./routes/auth')
 
 var indexRouter = require('./routes/index');
 
@@ -24,8 +27,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: config.session.secret,
+  resave: true,
+  saveUninitialized: false,
+  cookie: {secure: false}
+}))
+
+
+
+app.use(authRoutes)
+
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -35,9 +35,10 @@
                     {{#listings}}
                         <div class="list-item-container">
                             {{#img}}<img src="/uploads/{{img}}" alt="" class="listing-image"/>{{/img}}
-                            <a href="/listing/{{desc}}/{{listing_id}}"><h1 class="cat-title">{{desc}}</h1></a> 
+                            <a href="/listing/{{list_slug}}/{{listing_id}}"><h1 class="cat-title">{{desc}}</h1></a> 
                             {{#time}}<p class="cat-date">{{time}}</p>{{/time}}
                             {{#price}}<p class="cat-cost">${{price}}</p>{{/price}}
+                            <h6>Posted By: {{created_by}}</h6>
                             <p class="cat-content">{{cont}}</p>
                         </div>
                     {{/listings}}
